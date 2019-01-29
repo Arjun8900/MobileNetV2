@@ -28,16 +28,13 @@ def B1(inputs, kernel, filters, t,s):
     x = Conv2D(output, (1,1), padding='same', strides=(1,1))(inputs)
     x = BatchNormalization(axis=-1)(x)
     x = Activation('relu')(x)
-    print('b1 ',x.get_shape())
     
     x = DepthwiseConv2D(kernel, strides=(s,s), depth_multiplier=1, padding='same')(x)
     x = BatchNormalization(axis=-1)(x)
     x = Activation('relu')(x)
-    print('b1 ',x.get_shape())
     
     x = Conv2D(filters, (1,1), strides=(1,1), padding='same')(x)
     x = BatchNormalization(axis=-1)(x)
-    print('b1 ',x.get_shape())
     return x
     
     
@@ -47,15 +44,12 @@ def B2(inputs, kernel, filters, t,s):
     x = Conv2D(output, (1,1), padding='same', strides=(1,1))(inputs)
     x = BatchNormalization(axis=-1)(x)
     x = Activation('relu')(x)
-    print('b2 ', x.get_shape(), ' ',inputs.get_shape())
     x = DepthwiseConv2D(kernel, strides=(s,s), depth_multiplier=1, padding='same')(x)
     x = BatchNormalization(axis=channel_axis)(x)
     x = Activation('relu')(x)
-    print('b2 ', x.get_shape())
     
     x = Conv2D(filters, (1,1), strides=(1,1), padding='same')(x)
     x = BatchNormalization(axis=-1)(x)
-    print('b2 ' ,x.get_shape(), ' ', inputs.get_shape())
     
     return add([x, inputs])
 
@@ -65,7 +59,6 @@ def inverted_residual_block(inputs, kernel, filters, t, s,  n):
     # output = B1 + (n-1)*B2
     # s is used by DWC2D
     x = B1(inputs, kernel, filters, t,s)
-    print('in1 ',x.get_shape()) 
     for _ in range(1,n):
         x = B2(x, kernel, filters, t,1)
     return x
@@ -76,11 +69,8 @@ def My_Mobilenetv2(input_shape, num_classes):
     x = Conv2D(32, (3,3), padding='same', strides = (2,2))(inputs)
     x = BatchNormalization(axis=-1)(x)
     x = Activation('relu')(x)
-    print('main 1', x.get_shape())
     x = inverted_residual_block(x, (3,3), 16, t=1, s=1, n=1)
-    print('main 2', x.get_shape())
     x = inverted_residual_block(x, (3,3), 24, t=6, s=2, n=2)
-    print('main 3', x.get_shape())
     x = inverted_residual_block(x, (3,3), 32, t=6, s=2, n=3)
     x = inverted_residual_block(x, (3,3), 64, t=6, s=2, n=4)
     x = inverted_residual_block(x, (3,3), 96, t=6, s=2, n=3)
