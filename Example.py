@@ -21,7 +21,7 @@ num_classes = 100
 size = 32
 batch = 128
 
-
+# Using my_mv2 script
 from my_mv2 import My_Mobilenetv2
 
 
@@ -35,42 +35,17 @@ def unison_shuffled_copies(a, b):
 x_train,y_train = unison_shuffled_copies(x_train,y_train)
 
 
-
-
-
-
-
-count1 = x_train.shape[0]
-count2 = x_test.shape[0]
-
-print(count1, ' ' ,count2)
 print(x_train.shape)
 
 
 model = My_Mobilenetv2((size,size,3), num_classes)
 
-
-'''
-x = base_model.output
-x = GlobalAveragePooling2D()(x)
-
-x = Reshape((1,1,1280))(x)
-x = Dropout(0.5)(x)
-x = Conv2D(num_classes,(1,1),padding='same')(x)
-x = BatchNormalization(axis = -1)(x)
-x = Activation('softmax')(x)
-output = Reshape((num_classes,))(x)
-
-
-model = Model(inputs = base_model.input, outputs = output)
-'''
 for layer in model.layers:
     layer.trainable = True
 
 model.compile(optimizer='Adam', loss='categorical_crossentropy', metrics=['accuracy'])
 
 hist = model.fit(x_train, y_train, epochs=40,validation_split=0.05,  shuffle=True, batch_size=batch)
-#hist = model.fit(x_train, y_train, train_generator, steps_per_epoch=count1//batch, validation_steps = count2//batch, epochs = 300)
 model.save('mv2_cifar100_3.model')
 
 
