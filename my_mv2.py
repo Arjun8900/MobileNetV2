@@ -17,7 +17,6 @@ from keras import backend as K
 
 channel_axis=-1
 
-#with CustomObjectScope({'relu6': keras.applications.mobilenet.relu6,'DepthwiseConv2D': keras.applications.mobilenet.DepthwiseConv2D}):
 def relu6(x):
     return min(max(0,x) , 6)
     
