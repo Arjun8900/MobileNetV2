@@ -56,7 +56,7 @@ def B2(inputs, kernel, filters, t,s):
 
 
 def inverted_residual_block(inputs, kernel, filters, t, s,  n):
-    # output = B1 + (n-1)*B2
+    # x = B1 + (n-1)*B2
     # s is used by DWC2D
     x = B1(inputs, kernel, filters, t,s)
     for _ in range(1,n):
