@@ -28,5 +28,5 @@ print(img[0])
 
 predict = model.predict(img)
 
-results = imagenet_utils.decode_predictions(predit)
+results = imagenet_utils.decode_predictions(predict)
 print(results)
