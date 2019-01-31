@@ -20,11 +20,9 @@ path = 'cat.4059.jpg'   # Replace with custom image path
 
 img = cv2.resize(cv2.imread(path,1), (224,224))
 img = np.expand_dims(img, axis=0)
-print(img[0])
 
-img = img/255.
 
-print(img[0])
+img = img/255.  # Image Preprocessing
 
 predict = model.predict(img)
 
