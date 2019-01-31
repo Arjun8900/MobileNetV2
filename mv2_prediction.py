@@ -16,7 +16,7 @@ from keras.applications import imagenet_utils
 model = MobileNetV2(weights='imagenet', include_top=True)
 
 
-path = 'Dataset/cats_and_dogs/test_set/cats/cat.4059.jpg'
+path = 'cat.4059.jpg'
 
 img = cv2.resize(cv2.imread(path,1), (224,224))
 img = np.expand_dims(img, axis=0)
