@@ -7,7 +7,6 @@ import keras
 from keras.layers import Dense,GlobalAveragePooling2D
 from keras.models import Model
 from keras.utils.np_utils  import to_categorical
-sys.path.append('/home/arjun/ARJUN/mv2/models/research/slim')
 from nets.mobilenet import mobilenet_v2
 from keras.applications.mobilenetv2 import MobileNetV2
 from datasets import imagenet
